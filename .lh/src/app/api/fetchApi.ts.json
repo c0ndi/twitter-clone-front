@@ -1,0 +1,70 @@
+{
+    "sourceFile": "src/app/api/fetchApi.ts",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 13,
+            "patches": [
+                {
+                    "date": 1678353405833,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1678353590608,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -16,7 +16,7 @@\n     let response;\r\n     try {\r\n         response = await fetch(BACKEND_URL + path, options);\r\n     } catch {\r\n-        throw new Error(\"Coś poszło nie tak\");\r\n+        throw new Error(\"Something went wrong\");\r\n     }\r\n }\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1678353606842,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -14,9 +14,9 @@\n     }\r\n \r\n     let response;\r\n     try {\r\n-        response = await fetch(BACKEND_URL + path, options);\r\n+        response = await fetch(BACKEND_URL + path, options).catch(e => console.log(e));\r\n     } catch {\r\n         throw new Error(\"Something went wrong\");\r\n     }\r\n }\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1678353908830,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -18,5 +18,7 @@\n         response = await fetch(BACKEND_URL + path, options).catch(e => console.log(e));\r\n     } catch {\r\n         throw new Error(\"Something went wrong\");\r\n     }\r\n+\r\n+    return response;\r\n }\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1678353938322,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,6 +19,6 @@\n     } catch {\r\n         throw new Error(\"Something went wrong\");\r\n     }\r\n \r\n-    return response;\r\n+    return response.json();\r\n }\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1678353948028,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,6 +19,6 @@\n     } catch {\r\n         throw new Error(\"Something went wrong\");\r\n     }\r\n \r\n-    return response.json();\r\n+    return response;\r\n }\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1678353958097,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,6 +19,6 @@\n     } catch {\r\n         throw new Error(\"Something went wrong\");\r\n     }\r\n \r\n-    return response;\r\n+    return await response.json();\r\n }\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1678354009090,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,6 +19,11 @@\n     } catch {\r\n         throw new Error(\"Something went wrong\");\r\n     }\r\n \r\n-    return await response.json();\r\n+      let parsedResponse: Responses<ResponseData>;\r\n+    try {\r\n+        parsedResponse = await response.json();\r\n+    } catch {\r\n+        throw new Error(\"Problem z parsowaniem odpowiedzi z serwera\");\r\n+    }\r\n }\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1678354022122,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,9 +19,9 @@\n     } catch {\r\n         throw new Error(\"Something went wrong\");\r\n     }\r\n \r\n-      let parsedResponse: Responses<ResponseData>;\r\n+    let parsedResponse;\r\n     try {\r\n         parsedResponse = await response.json();\r\n     } catch {\r\n         throw new Error(\"Problem z parsowaniem odpowiedzi z serwera\");\r\n"
+                },
+                {
+                    "date": 1678354048449,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -25,5 +25,7 @@\n         parsedResponse = await response.json();\r\n     } catch {\r\n         throw new Error(\"Problem z parsowaniem odpowiedzi z serwera\");\r\n     }\r\n+\r\n+    return parsedResponse.data;\r\n }\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1678354120392,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -20,12 +20,5 @@\n         throw new Error(\"Something went wrong\");\r\n     }\r\n \r\n     let parsedResponse;\r\n-    try {\r\n-        parsedResponse = await response.json();\r\n-    } catch {\r\n-        throw new Error(\"Problem z parsowaniem odpowiedzi z serwera\");\r\n-    }\r\n-\r\n-    return parsedResponse.data;\r\n }\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1678354590678,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -14,11 +14,11 @@\n     }\r\n \r\n     let response;\r\n     try {\r\n-        response = await fetch(BACKEND_URL + path, options).catch(e => console.log(e));\r\n+        return response = await fetch(BACKEND_URL + path, options).catch(e => console.log(e));\r\n     } catch {\r\n         throw new Error(\"Something went wrong\");\r\n     }\r\n \r\n-    let parsedResponse;\r\n+\r\n }\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1678354661260,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-const BACKEND_URL = process.env.BACKEND_URL;\r\n+const BACKEND_URL = \"localhost:8080\";\r\n \r\n export async function fetchApi(path: string, body?: any, options?: RequestInit) {\r\n     if (body) {\r\n         options = {\r\n"
+                },
+                {
+                    "date": 1678354666727,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-const BACKEND_URL = \"localhost:8080\";\r\n+const BACKEND_URL = \"http://localhost:8080\";\r\n \r\n export async function fetchApi(path: string, body?: any, options?: RequestInit) {\r\n     if (body) {\r\n         options = {\r\n"
+                }
+            ],
+            "date": 1678353405833,
+            "name": "Commit-0",
+            "content": "const BACKEND_URL = process.env.BACKEND_URL;\r\n\r\nexport async function fetchApi(path: string, body?: any, options?: RequestInit) {\r\n    if (body) {\r\n        options = {\r\n            ...options,\r\n            body: JSON.stringify(body),\r\n        }\r\n    }\r\n\r\n    options = {\r\n        ...options,\r\n        headers: { \"Content-Type\": \"application/json\" },\r\n    }\r\n\r\n    let response;\r\n    try {\r\n        response = await fetch(BACKEND_URL + path, options);\r\n    } catch {\r\n        throw new Error(\"Coś poszło nie tak\");\r\n    }\r\n}"
+        }
+    ]
+}

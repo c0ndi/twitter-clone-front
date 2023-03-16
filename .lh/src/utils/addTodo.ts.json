@@ -1,0 +1,90 @@
+{
+    "sourceFile": "src/utils/addTodo.ts",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 18,
+            "patches": [
+                {
+                    "date": 1678355550627,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1678355558643,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n export default async function addTodo(todo: string) {\r\n     if(todo) {\r\n-       await fetch(\"http://localhost:8080/todos\", {method: \"POST\", body: JSON.stringify(todo)})   \r\n+       await fetch(\"http://localhost:8080/todos\", {method: \"POST\", body: JSON.stringify({content: todo})})   \r\n     }\r\n }\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1678355568410,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -0,0 +1,5 @@\n+export default async function addTodo(todo: string) {\r\n+    if (todo) {\r\n+        await fetch(\"http://localhost:8080/todos\", { method: \"POST\", body: JSON.stringify({ content: todo }) })\r\n+    }\r\n+}\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1678355585275,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,10 +1,5 @@\n export default async function addTodo(todo: string) {\r\n     if (todo) {\r\n-        await fetch(\"http://localhost:8080/todos\", { method: \"POST\", body: JSON.stringify({ content: todo }) })\r\n-    }\r\n-}\n-export default async function addTodo(todo: string) {\r\n-    if(todo) {\r\n-       await fetch(\"http://localhost:8080/todos\", {method: \"POST\", body: JSON.stringify({content: todo})})   \r\n-    }\r\n+        await fetch(\"http://localhost:8080/todos\", { method: \"POST\", body: JSON.stringify({ content: todo }), contentType: \"application/json\" })\r\n+    \r\n }\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1678355593357,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n export default async function addTodo(todo: string) {\r\n     if (todo) {\r\n-        await fetch(\"http://localhost:8080/todos\", { method: \"POST\", body: JSON.stringify({ content: todo }), contentType: \"application/json\" })\r\n+        await fetch(\"http://localhost:8080/todos\", { method: \"POST\", body: JSON.stringify({ content: todo }) })\r\n     \r\n }\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1678355599957,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -0,0 +1,5 @@\n+export default async function addTodo(todo: string) {\r\n+    if (todo) {\r\n+        await fetch(\"http://localhost:8080/todos\", { method: \"POST\", body: JSON.stringify({ content: todo }) })\r\n+    }\r\n+}\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1678355607719,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,10 +1,5 @@\n export default async function addTodo(todo: string) {\r\n     if (todo) {\r\n         await fetch(\"http://localhost:8080/todos\", { method: \"POST\", body: JSON.stringify({ content: todo }) })\r\n     }\r\n-}\n-export default async function addTodo(todo: string) {\r\n-    if (todo) {\r\n-        await fetch(\"http://localhost:8080/todos\", { method: \"POST\", body: JSON.stringify({ content: todo }) })\r\n-    \r\n }\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1678355641505,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,7 @@\n export default async function addTodo(todo: string) {\r\n     if (todo) {\r\n-        await fetch(\"http://localhost:8080/todos\", { method: \"POST\", body: JSON.stringify({ content: todo }) })\r\n+        await fetch(\"http://localhost:8080/todos\", { method: \"POST\", body: JSON.stringify({ content: todo }) }).then(res => console.log(\"ok\")).catch(e=> {\r\n+            throw new Error(e);\r\n+        })\r\n     }\r\n }\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1678356201952,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,6 +2,6 @@\n     if (todo) {\r\n         await fetch(\"http://localhost:8080/todos\", { method: \"POST\", body: JSON.stringify({ content: todo }) }).then(res => console.log(\"ok\")).catch(e=> {\r\n             throw new Error(e);\r\n         })\r\n-    }\r\n+    } \r\n }\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1678356240724,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,6 +1,8 @@\n export default async function addTodo(todo: string) {\r\n     if (todo) {\r\n+        console.log(todo);\r\n+        \r\n         await fetch(\"http://localhost:8080/todos\", { method: \"POST\", body: JSON.stringify({ content: todo }) }).then(res => console.log(\"ok\")).catch(e=> {\r\n             throw new Error(e);\r\n         })\r\n     } \r\n"
+                },
+                {
+                    "date": 1678356246418,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,8 +1,6 @@\n export default async function addTodo(todo: string) {\r\n     if (todo) {\r\n-        console.log(todo);\r\n-        \r\n         await fetch(\"http://localhost:8080/todos\", { method: \"POST\", body: JSON.stringify({ content: todo }) }).then(res => console.log(\"ok\")).catch(e=> {\r\n             throw new Error(e);\r\n         })\r\n     } \r\n"
+                },
+                {
+                    "date": 1678356271586,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,6 +2,8 @@\n     if (todo) {\r\n         await fetch(\"http://localhost:8080/todos\", { method: \"POST\", body: JSON.stringify({ content: todo }) }).then(res => console.log(\"ok\")).catch(e=> {\r\n             throw new Error(e);\r\n         })\r\n+    console.log(todo);\r\n+    \r\n     } \r\n }\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1678356285834,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,8 +2,6 @@\n     if (todo) {\r\n         await fetch(\"http://localhost:8080/todos\", { method: \"POST\", body: JSON.stringify({ content: todo }) }).then(res => console.log(\"ok\")).catch(e=> {\r\n             throw new Error(e);\r\n         })\r\n-    console.log(todo);\r\n-    \r\n     } \r\n }\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1678356293931,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,7 +1,7 @@\n export default async function addTodo(todo: string) {\r\n     if (todo) {\r\n         await fetch(\"http://localhost:8080/todos\", { method: \"POST\", body: JSON.stringify({ content: todo }) }).then(res => console.log(\"ok\")).catch(e=> {\r\n-            throw new Error(e);\r\n+            console.log(e)\r\n         })\r\n     } \r\n }\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1678356329576,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,7 +1,7 @@\n export default async function addTodo(todo: string) {\r\n     if (todo) {\r\n-        await fetch(\"http://localhost:8080/todos\", { method: \"POST\", body: JSON.stringify({ content: todo }) }).then(res => console.log(\"ok\")).catch(e=> {\r\n+        await fetch(\"http://localhost:8080/todos\", { method: \"POST\", body: JSON.stringify({ content: todo }) }).then(res => console.log(res)).catch(e=> {\r\n             console.log(e)\r\n         })\r\n     } \r\n }\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1678356493462,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,7 +1,7 @@\n export default async function addTodo(todo: string) {\r\n     if (todo) {\r\n-        await fetch(\"http://localhost:8080/todos\", { method: \"POST\", body: JSON.stringify({ content: todo }) }).then(res => console.log(res)).catch(e=> {\r\n+        await fetch(\"http://localhost:8080/todos\", { method: \"POST\", body: JSON.stringify({ content: todo }) }).then(res => console.log(res)).catch(e => {\r\n             console.log(e)\r\n         })\r\n     } \r\n }\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1678356498893,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,7 +1,7 @@\n-export default async function addTodo(todo: string) {\r\n+export default function addTodo(todo: string) {\r\n     if (todo) {\r\n-        await fetch(\"http://localhost:8080/todos\", { method: \"POST\", body: JSON.stringify({ content: todo }) }).then(res => console.log(res)).catch(e => {\r\n+        fetch(\"http://localhost:8080/todos\", { method: \"POST\", body: JSON.stringify({ content: todo }) }).then(res => console.log(res)).catch(e => {\r\n             console.log(e)\r\n         })\r\n     } \r\n }\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1678356694995,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,7 +1,7 @@\n export default function addTodo(todo: string) {\r\n     if (todo) {\r\n-        fetch(\"http://localhost:8080/todos\", { method: \"POST\", body: JSON.stringify({ content: todo }) }).then(res => console.log(res)).catch(e => {\r\n+        fetch(\"http://localhost:8080/todos\", { method: \"POST\", body: JSON.stringify({ content: \"todo\" }) }).then(res => console.log(res)).catch(e => {\r\n             console.log(e)\r\n         })\r\n     } \r\n }\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1678356761505,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,7 +1,10 @@\n export default function addTodo(todo: string) {\r\n     if (todo) {\r\n-        fetch(\"http://localhost:8080/todos\", { method: \"POST\", body: JSON.stringify({ content: \"todo\" }) }).then(res => console.log(res)).catch(e => {\r\n+        fetch(\"http://localhost:8080/todos\", { method: \"POST\", body: JSON.stringify({ content: \"todo\" , headers: {\r\n+      \"Content-Type\": \"application/json\",\r\n+      // 'Content-Type': 'application/x-www-form-urlencoded',\r\n+    },}) }).then(res => console.log(res)).catch(e => {\r\n             console.log(e)\r\n         })\r\n     } \r\n }\n\\ No newline at end of file\n"
+                }
+            ],
+            "date": 1678355550627,
+            "name": "Commit-0",
+            "content": "export default async function addTodo(todo: string) {\r\n    if(todo) {\r\n       await fetch(\"http://localhost:8080/todos\", {method: \"POST\", body: JSON.stringify(todo)})   \r\n    }\r\n}"
+        }
+    ]
+}
