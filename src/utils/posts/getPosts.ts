@@ -1,4 +1,4 @@
-export const getAllPosts = async () => {
+export const getPosts = async () => {
    const posts = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/posts`, {
       next: {revalidate: 30},
       method: "GET",
@@ -8,5 +8,5 @@ export const getAllPosts = async () => {
       }
    });
 
-   return posts;
+   return posts.json();
 }
