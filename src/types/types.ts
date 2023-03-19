@@ -1,4 +1,6 @@
 export type IPost ={
+   authorName: string;
+   authorId: string;
    title: string;
    content: string;
    _id?: string;

@@ -1,23 +1,36 @@
 import Head from "next/head";
-import {useAuth} from "@/hooks/useAuth";
+
 import Posts from "@/components/posts/Posts";
 import AddPost from "@/components/posts/AddPost";
 
-export default function Home() {
-   const {isAuth, user} = useAuth();
+import {useLoading} from "@/hooks/useLoading";
+import {useAuth} from "@/hooks/useAuth";
 
-   if (!isAuth && !user) {
-      return <p>Loading...</p>
-   }
+import {getPosts} from "@/utils/posts/getPosts";
+import {addPost} from "@/utils/posts/addPost";
+
+import {useMutation, useQuery, useQueryClient} from "@tanstack/react-query";
+
+export default function Home() {
+   const queryClient = useQueryClient()
+   const {data, isLoading, error} = useQuery({queryKey: ['posts'], queryFn: getPosts})
+
+
+   const newPostMutation = useMutation({
+      mutationFn: (formData: FormData) => addPost(formData),
+      onSuccess: () => {
+         queryClient.invalidateQueries(["posts"]);
+      }
+   })
 
    return (
-      <div>
-         <Head>
-            <title>Home</title>
-         </Head>
-
-         <AddPost/>
-         <Posts/>
-      </div>
+      <main className={"max-w-[720px] mx-auto border border-y-0"}>
+         <AddPost mutation={newPostMutation}/>
+         <Posts
+            data={data}
+            isLoading={isLoading}
+            error={error}
+         />
+      </main>
    )
 }

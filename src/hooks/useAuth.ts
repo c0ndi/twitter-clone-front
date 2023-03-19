@@ -3,10 +3,6 @@ import { useRouter } from "next/router";
 import {useEffect, useState} from "react";
 
 export const useAuth = (pageType?: "auth") => {
-   // todo
-   // - add useQuery here
-   // - install jotai
-   //    - useAtom here ?
    const router = useRouter();
    const [isAuth, setIsAuth] = useState<boolean>(false);
    const [user, setUser] = useState<{_id: string | null}>();
@@ -14,20 +10,18 @@ export const useAuth = (pageType?: "auth") => {
    useEffect(() => {
       isLogIn()
          .then(async (res) => {
-            if(pageType) {
-               if (res.status === 200) {
-                  router.push('/')
-               }
-            }
+            if (pageType && res.status === 200) router.push('/')
 
             if (res.status === 200) {
                const {user} = await res.json();
 
                setUser(user);
                setIsAuth(true);
-            } else {
-               router.push('/login')
+
+               return;
             }
+
+            router.push('/login')
          })
          .catch(err => console.log(err))
    }, [])
