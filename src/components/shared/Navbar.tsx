@@ -1,4 +1,6 @@
-export default function Navbar() {
+import { TUser } from "@/types/types";
+
+export default function Navbar({}) {
    return (
       <div className="navbar bg-base-100">
          <div className="flex-1">
@@ -7,6 +9,7 @@ export default function Navbar() {
                <span className="text-base-content">Twitter</span>
             </div>
          </div>
+
          <div className="flex-none">
             <button className="btn btn-square btn-ghost">
                <svg

@@ -5,7 +5,7 @@ import {useEffect, useState} from "react";
 export const useAuth = (pageType?: "auth") => {
    const router = useRouter();
    const [isAuth, setIsAuth] = useState<boolean>(false);
-   const [user, setUser] = useState<{_id: string | null}>();
+   const [user, setUser] = useState<{_id: string}>({_id: ""});
 
    useEffect(() => {
       isLogIn()
@@ -21,7 +21,8 @@ export const useAuth = (pageType?: "auth") => {
                return;
             }
 
-            router.push('/login')
+            if(router.pathname !== '/login' && router.pathname !== '/register')
+               router.push('/login')
          })
          .catch(err => console.log(err))
    }, [])

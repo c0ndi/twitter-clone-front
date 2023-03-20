@@ -5,6 +5,5 @@ export const addPost = async (formData: FormData) => {
       body: formData,
    })
 
-   console.log(newPost)
-   console.log(await newPost.json())
+   return newPost.json();
 }

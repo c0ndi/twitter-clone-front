@@ -4,7 +4,7 @@ import {useQuery, useQueryClient} from "@tanstack/react-query";
 import {Key, useEffect, useState} from "react"
 import Post from "./Post";
 
-export default function Posts({data, isLoading, error}: { data: {posts: IPost []} | undefined, isLoading: boolean, error: any}) {
+export default function Posts({data, newLikeMutation, isLoading, error}: { data: {posts: IPost []} | undefined, newLikeMutation: any, isLoading: boolean, error: any}) {
    if (isLoading) {
       return <p>loading...</p>
    }
@@ -16,15 +16,17 @@ export default function Posts({data, isLoading, error}: { data: {posts: IPost []
    return (
       <div className={"mt-32"}>
          <div className={"grid grid-cols-1 gap-10 w-full"}>
-            {data?.posts.map(({authorName, authorId, title, content, photo}: IPost, key: Key | null | undefined) => {
+            {data?.posts.map(({_id, authorName, authorId, content, photo, likes}: IPost, key: Key | null | undefined) => {
                return (
                   <Post
                      key={key}
+                     _id={_id}
                      authorName={authorName}
                      authorId={authorId}
-                     title={title}
                      content={content}
                      photo={photo}
+                     likes={likes}
+                     newLikeMutation={newLikeMutation}
                   />
                )
             })}

@@ -3,8 +3,6 @@ import {registerUser} from "@/utils/auth/registerUser";
 import { useRouter } from "next/router";
 import {useForm} from "react-hook-form";
 
-
-
 export default function Register() {
    const router = useRouter();
    const {register, handleSubmit, watch, formState: {errors}} = useForm<TInputsRegister>();
@@ -13,6 +11,10 @@ export default function Register() {
 
       if(res.status == 200) {
          router.push('/login')
+      }
+
+      if(res.status == 409) {
+         console.log(await res.json());
       }
    }
 

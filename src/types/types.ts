@@ -1,13 +1,13 @@
-export type IPost ={
+export type IPost = {
    authorName: string;
    authorId: string;
-   title: string;
    content: string;
-   _id?: string;
+   _id: string;
    createdAt?: string;
    photo?: string;
    comments?: [];
-   likes?: number;
+   likes?: string [];
+   newLikeMutation?: any;
 }
 
 export type TInputsLogin = {
@@ -20,4 +20,14 @@ export type TInputsRegister = {
    email: string;
    password: string;
    confirm_password: string;
+}
+
+export type TUser = {
+   user: {
+      _id: string;
+      name: string;
+      email: string;
+      created_at: string;
+      likedPosts: [];
+   }
 }
