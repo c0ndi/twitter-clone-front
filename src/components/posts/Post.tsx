@@ -1,24 +1,34 @@
+import Image from "next/image";
+
 import {useAuth} from "@/hooks/useAuth";
 import {IPost} from "@/types/types";
+import {addComment} from "@/utils/posts/addComment";
 import {likePost} from "@/utils/posts/likePost";
-import Image from "next/image";
+
+import {useQueryClient} from "@tanstack/react-query";
+import {useForm} from "react-hook-form";
 import ReactMarkdown from "react-markdown";
 
-export default function Post({_id, authorName, authorId, content, photo, likes, newLikeMutation}: IPost) {
-   const {isAuth, user} = useAuth();
+import PostNewComment from "./PostNewComment";
+import PostLikes from "./PostLikes";
+import PostComments from "./PostComments";
 
-   const isLiked = likes && user && likes?.includes(user?._id) || false;
-   console.log(isLiked)
+export default function Post({isSinglePost, _id, authorName, authorId, content, photo, likes, comments}: IPost) {
+   const queryClient = useQueryClient()
+
    return (
-      <div className={"flex flex-col gap-2 bg-base-100 border border-x-0 p-3"}>
+      <div className={"flex flex-col gap-2 bg-base-300 rounded-xl p-3"}>
          <p className={"text-xl font-semibold"}>
             {authorName}
             &nbsp;
             <span className={"font-light text-gray-400"}>@{authorId}</span>
          </p>
-         <article className="pt-12 prose">
-            <ReactMarkdown>{content}</ReactMarkdown>
-         </article>
+
+         <div className={"bg-base-200 rounded-md p-3 my-10"}>
+            <article className="prose">
+               <ReactMarkdown>{content}</ReactMarkdown>
+            </article>
+         </div>
 
          {photo &&
             <div className={"mt-10 relative h-[504px]"}>
@@ -31,18 +41,9 @@ export default function Post({_id, authorName, authorId, content, photo, likes, 
             </div>
          }
 
-         <p className={"font-bold text-xl"}>{likes && likes.length}</p>
-
-         <button
-            className={"btn btn-secondary"}
-            onClick={() => newLikeMutation.mutate(_id)}
-         >
-            {isLiked ?
-               "Unlike"
-               :
-               "Like"
-            }
-         </button>
+         <PostLikes queryClient={queryClient} likes={likes} _id={_id} />
+         <PostComments comments={comments} _id={_id} isSinglePost/>
+         <PostNewComment _id={_id} />
       </div>
    )
 }

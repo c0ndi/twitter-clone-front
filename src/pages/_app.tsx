@@ -22,7 +22,6 @@ export default function App({Component, pageProps: {...pageProps}}: AppProps) {
 
    return (
       <QueryClientProvider client={queryClient}>
-         <Navbar />
          <Component {...pageProps} />
       </QueryClientProvider>
    );

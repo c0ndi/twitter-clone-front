@@ -7,11 +7,20 @@ import CodeMirror from "@uiw/react-codemirror";
 import {EditorView} from "@codemirror/view"
 import {markdown, markdownLanguage} from "@codemirror/lang-markdown";
 import {languages} from "@codemirror/language-data";
-import {useState} from "react";
+import {useContext, useState} from "react";
 
-export default function AddPost({newPostMutation}: { newPostMutation: any }) {
+export default function AddPost() {
+   const queryClient = useQueryClient();
+
    const {register, handleSubmit, watch, formState: {errors}, reset} = useForm<IPost>();
    const [content, setContent] = useState<string>("");
+
+   const newPostMutation = useMutation({
+      mutationFn: (formData: FormData) => addPost(formData),
+      onSuccess: () => {
+         queryClient.invalidateQueries(["posts"]);
+      }
+   })
 
    const onSubmit = async (data: IPost) => {
       const {photo} = data;
@@ -30,7 +39,7 @@ export default function AddPost({newPostMutation}: { newPostMutation: any }) {
    return (
       <form
          onSubmit={handleSubmit(onSubmit)}
-         className={"flex flex-col gap-2 p-3 border border-x-0 border-b-0"}
+         className={"flex flex-col gap-2 p-3 bg-base-300 rounded-xl"}
       >
          <CodeMirror
             value={content}
