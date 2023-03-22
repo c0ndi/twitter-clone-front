@@ -1,17 +1,17 @@
 import {TComment} from '@/types/types';
 import {useQueryClient} from '@tanstack/react-query';
-import PostAllCommentsModal from './PostAllCommentsModal';
-import PostSingleComment from './PostSingleComment';
+import Comment from './Comment';
 
+type TComments = {
+   comments: TComment[] | [];
+   _id: string;
+   maxLength: number;
+}
 
-export default function PostComments({
-                                    isSinglePost,
-                                    comments,
-                                    _id
-                                 }: { isSinglePost?: boolean, comments?: TComment [], _id: string }) {
+export default function Comments({comments, _id, maxLength}: TComments) {
    if (comments?.length) {
       return (
-         <div className={"pt-4"}>
+         <div className={"pt-4 mb-2"}>
             <div className={"flex items-center justify-between w-full py-2"}>
                <p className={"text-sm font-bold"}>Comments: {comments?.length}</p>
 
@@ -29,9 +29,9 @@ export default function PostComments({
 
             <div className={"flex flex-col gap-2"}>
                {comments?.map(({user, content}, index) => {
-                  if (index < 3) {
+                  if (index < maxLength) {
                      return (
-                        <PostSingleComment
+                        <Comment
                            key={index}
                            user={user}
                            content={content}
@@ -40,14 +40,6 @@ export default function PostComments({
                   }
                })}
             </div>
-
-
-            {!isSinglePost &&
-               <PostAllCommentsModal
-                  comments={comments}
-                  _id={_id}
-               />
-            }
          </div>
       )
    }

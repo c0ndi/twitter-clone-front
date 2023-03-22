@@ -44,9 +44,9 @@ export default function AddPost() {
          <CodeMirror
             value={content}
             width="500px"
-            height="30vh"
+            height="20vh"
             minWidth="100%"
-            minHeight="30vh"
+            minHeight="20vh"
             theme={"dark"}
             extensions={[
                markdown({base: markdownLanguage, codeLanguages: languages}),

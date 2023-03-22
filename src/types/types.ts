@@ -6,8 +6,8 @@ export type IPost = {
    _id: string;
    createdAt?: string;
    photo?: string;
-   comments?: TComment [];
-   likes?: string [];
+   comments: TComment [] | [];
+   likes: string [] | [];
 }
 
 export type TInputsLogin = {

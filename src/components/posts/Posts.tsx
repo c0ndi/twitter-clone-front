@@ -2,7 +2,7 @@ import {IPost} from "@/types/types";
 import {getPosts} from "@/utils/posts/getPosts";
 import {useQuery, useQueryClient} from "@tanstack/react-query";
 import {Key, useEffect, useState} from "react"
-import Post from "./Post";
+import Post from "./Post/Post";
 
 export default function Posts() {
    const queryClient = useQueryClient();

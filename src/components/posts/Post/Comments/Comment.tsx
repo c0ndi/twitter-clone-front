@@ -1,6 +1,6 @@
 import { TComment } from "@/types/types";
 
-export default function PostSingleComment({user, content}: TComment){
+export default function Comment({user, content}: TComment){
    return (
       <div className={"flex flex-col gap-2 bg-base-200 rounded-md p-3"}>
          <p className={"text-sm"}>

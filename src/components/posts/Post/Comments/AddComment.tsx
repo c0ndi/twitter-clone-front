@@ -1,22 +1,37 @@
-import { addComment } from "@/utils/posts/addComment";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import {addComment} from "@/utils/posts/addComment";
+import {useMutation, useQueryClient} from "@tanstack/react-query";
 import router from "next/router";
-import { useForm } from "react-hook-form";
+import {useForm} from "react-hook-form";
 
-export default function PostNewComment({_id}: {_id: string}) {
+type TPostNewComment = {
+   _id: string;
+}
+
+type TComment = {
+   comment: string;
+}
+
+export default function AddComment({_id}: TPostNewComment) {
    const queryClient = useQueryClient()
 
-   const {register, handleSubmit, reset} = useForm<{ comment: string }>();
+   const {register, handleSubmit, reset} = useForm<TComment>();
+
+   const QUERY_ID = `post-${_id}`;
 
    const newCommentMutation = useMutation({
       mutationFn: (data: { comment: string, _id: string }) => addComment({comment: data.comment, _id}),
       onSuccess: () => {
-         queryClient.invalidateQueries(["posts"]);
-         router.push(`/posts/${_id}`);
+         Promise.all([
+            queryClient.invalidateQueries(["posts"]),
+            queryClient.invalidateQueries([QUERY_ID])
+         ])
+
+         if (router.pathname === "/posts")
+            router.push(`/posts/${_id}`);
       }
    });
 
-   const onSubmit = ({comment}: { comment: string }) => {
+   const onSubmit = ({comment}: TComment) => {
       newCommentMutation.mutate({comment, _id})
 
       reset();

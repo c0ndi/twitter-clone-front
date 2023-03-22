@@ -7,7 +7,6 @@ export async function getSinglePost(_id: string | string[] | undefined) {
       credentials: 'include',
       next: {revalidate: 30},
    });
-   console.log(res)
 
    return res.json();
 }
