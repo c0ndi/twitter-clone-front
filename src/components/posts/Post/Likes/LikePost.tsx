@@ -2,7 +2,9 @@ import Spinner from "@/components/shared/Spinner";
 import {useAuth} from "@/hooks/useAuth";
 import {likePost} from "@/utils/posts/likePost";
 import {useMutation, useQueryClient} from "@tanstack/react-query";
-import {useState} from "react";
+import {useEffect, useState} from "react";
+import HeartWhite from '../../../../../public/icons/white_heart.svg'
+import Image from 'next/image'
 
 type TPostLikes = {
    likes: string[] | [];
@@ -10,22 +12,8 @@ type TPostLikes = {
 }
 
 type TLikeButtonText = {
-   likes: string[] | [];
+   likes: number;
    isLiked: boolean;
-}
-
-function LikeButtonText({likes, isLiked}: TLikeButtonText) {
-   return (
-      <>
-         {likes.length}
-         &nbsp;
-         {isLiked ?
-            "Unlike"
-            :
-            "Like"
-         }
-      </>
-   )
 }
 
 export default function LikePost({likes, _id}: TPostLikes) {
@@ -37,6 +25,7 @@ export default function LikePost({likes, _id}: TPostLikes) {
    const newLikeMutation = useMutation({
       mutationFn: (postId: string) => {
          setLoading(true);
+
          return likePost(postId)
       },
       onSettled: (data, error, variables, context) => {
@@ -49,23 +38,18 @@ export default function LikePost({likes, _id}: TPostLikes) {
       }
    });
 
-   const isLiked = likes.includes(user._id as never);
+   const isLiked = likes.includes(user?._id as never);
 
    return (
-      <div className={"flex items-center gap-2 w-full"}>
-         <button
-            className={"btn btn-secondary w-full"}
-            onClick={() => newLikeMutation.mutate(_id)}
-         >
-            {loading  ?
-               <Spinner />
-               :
-               <LikeButtonText
-                  likes={likes}
-                  isLiked={isLiked}
-               />
-            }
-         </button>
-      </div>
+      <button
+         className={`btn btn-xs btn-secondary w-full`}
+         onClick={() => newLikeMutation.mutate(_id)}
+      >
+         <Image
+            src={HeartWhite}
+            alt={"Like"}
+            height={16}
+         />
+      </button>
    )
 }

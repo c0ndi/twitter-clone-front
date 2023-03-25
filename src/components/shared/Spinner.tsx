@@ -5,8 +5,8 @@ export default function Spinner() {
       <Image
          src={SpinnerPNG}
          alt={"Spinner"}
-         width={32}
-         height={32}
+         width={16}
+         height={16}
          className="animate-spin"
       />
    )

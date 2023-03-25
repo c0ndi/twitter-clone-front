@@ -13,7 +13,6 @@ export default function AddPost() {
    const queryClient = useQueryClient();
 
    const {register, handleSubmit, watch, formState: {errors}, reset} = useForm<IPost>();
-   const [content, setContent] = useState<string>("");
 
    const newPostMutation = useMutation({
       mutationFn: (formData: FormData) => addPost(formData),
@@ -23,7 +22,7 @@ export default function AddPost() {
    })
 
    const onSubmit = async (data: IPost) => {
-      const {photo} = data;
+      const {content, photo} = data;
       const formData = new FormData();
 
       if (photo) {
@@ -41,17 +40,10 @@ export default function AddPost() {
          onSubmit={handleSubmit(onSubmit)}
          className={"flex flex-col gap-2 p-3 bg-base-300 rounded-xl"}
       >
-         <CodeMirror
-            value={content}
-            width="500px"
-            height="20vh"
-            minWidth="100%"
-            minHeight="20vh"
-            theme={"dark"}
-            extensions={[
-               markdown({base: markdownLanguage, codeLanguages: languages}),
-            ]}
-            onChange={(value) => setContent(value)}
+         <textarea
+            {...register("content", {required: true})}
+            className={"textarea resize-none h-40 w-full outline-none p-3 bg-base-200 rounded-md"}
+            placeholder={"Write your post here"}
          />
          <input
             {...register("photo")}

@@ -20,13 +20,13 @@ export default function Posts() {
    return (
       <div className={"mt-10"}>
          <div className={"grid grid-cols-1 gap-8 w-full"}>
-            {data?.posts.map(({_id, authorName, authorId, content, photo, likes, comments}: IPost, key: Key | null | undefined) => {
+            {data?.posts.map(({_id, authorId, author, content, photo, likes, comments}: IPost, key: Key | null | undefined) => {
                return (
                   <Post
                      key={key}
                      _id={_id}
-                     authorName={authorName}
                      authorId={authorId}
+                     author={author}
                      content={content}
                      photo={photo}
                      likes={likes}

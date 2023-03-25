@@ -1,13 +1,13 @@
 export type IPost = {
-   isSinglePost?: boolean;
-   authorName: string;
    authorId: string;
+   author: TUser;
    content: string;
    _id: string;
    createdAt?: string;
    photo?: string;
    comments: TComment [] | [];
    likes: string [] | [];
+   profilePicture?: string;
 }
 
 export type TInputsLogin = {
@@ -28,6 +28,8 @@ export type TUser = {
    email: string;
    created_at: string;
    likedPosts: [];
+   profilePicture?: string;
+   backgroundPicture?: string;
 }
 
 export type TComment = {
