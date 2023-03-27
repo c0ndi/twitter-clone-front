@@ -1,11 +1,14 @@
 import Loading from "@/components/shared/Loading";
-import BackgroundPicture from "@/components/user/BackgroundPicture";
-import ProfilePicture from "@/components/user/ProfilePicture";
+import Navbar from "@/components/shared/Navbar";
+
 import {useAuth} from "@/hooks/useAuth";
 import {useLoading} from "@/hooks/useLoading";
-import {addUserPicture} from "@/utils/user/addUserPicture";
+import {getUserPosts} from "@/utils/user/getUserPosts";
+
 import {useMutation, useQuery, useQueryClient} from "@tanstack/react-query";
 import {useForm} from "react-hook-form";
+import UserProfileSection from "@/components/user/UserProfileSection";
+import Posts from "@/components/posts/Posts";
 
 export default function Page() {
    const {isAuth, user} = useAuth();
@@ -13,7 +16,24 @@ export default function Page() {
 
    const queryClient = useQueryClient();
 
-   const profilePictureMutation = useMutation({
+   const USER_POSTS_QUERY_KEY = `${user?._id}-posts`;
+   const {data, isLoading, error} = useQuery({queryKey: [USER_POSTS_QUERY_KEY], queryFn: () => getUserPosts()})
+
+   if (loading) {
+      return <Loading />
+   }
+
+   return (
+      <main className={"max-w-[720px] mx-auto px-3"}>
+         <UserProfileSection user={user}/>
+
+         <Posts data={data} isLoading={isLoading} error={error}/>
+      </main>
+   )
+}
+
+/*
+*    const profilePictureMutation = useMutation({
       mutationFn: (formData: FormData) => addUserPicture(formData),
       onSuccess: () => {
          queryClient.invalidateQueries(["user"]);
@@ -32,26 +52,4 @@ export default function Page() {
       profilePictureMutation.mutate(formData);
       reset();
    }
-
-   if (loading) {
-      return <Loading/>
-   }
-
-   return (
-      <main className={"max-w-[720px] mx-auto"}>
-         <BackgroundPicture photo={user.backgroundPicture} />
-
-         <div className={"-translate-y-[25px] px-6 flex items-center gap-4"}>
-            <ProfilePicture
-               photo={user.profilePicture}
-               name={user.name}
-            />
-
-            <p className={"text-3xl text-medium"}>
-               {user.name}
-            </p>
-         </div>
-
-      </main>
-   )
-}
+* */

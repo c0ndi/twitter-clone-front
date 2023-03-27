@@ -2,7 +2,7 @@ import Image from "next/image";
 
 type TPhotoModal = {
    children: JSX.Element,
-   elementUrl: string;
+   elementUrl: string | undefined;
 }
 
 export default function PhotoModal({children, elementUrl}: TPhotoModal) {
@@ -26,7 +26,7 @@ export default function PhotoModal({children, elementUrl}: TPhotoModal) {
          >
             <div className="modal-box w-[100vw] relative">
                <Image
-                  src={elementUrl}
+                  src={elementUrl ?? ""}
                   alt={"Photo"}
                   width={800}
                   height={600}

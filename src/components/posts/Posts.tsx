@@ -2,24 +2,28 @@ import {IPost} from "@/types/types";
 import {getPosts} from "@/utils/posts/getPosts";
 import {useQuery, useQueryClient} from "@tanstack/react-query";
 import {Key, useEffect, useState} from "react"
+import Spinner from "../shared/Spinner";
 import Post from "./Post/Post";
 
-export default function Posts() {
-   const queryClient = useQueryClient();
+type TPosts = {
+   data: {
+      posts: IPost[];
+   },
+   isLoading: boolean,
+   error: any,
+}
 
-   const {data, isLoading, error} = useQuery({queryKey: ['posts'], queryFn: getPosts})
-
-   if (isLoading) {
-      return <p>loading...</p>
+export default function Posts({data, isLoading, error}: TPosts) {
+   if(isLoading) {
+      return <Spinner />
    }
 
-   if (error) {
+   if(error) {
       return <p>Error occured:(</p>
    }
-
    return (
       <div className={"mt-10"}>
-         <div className={"grid grid-cols-1 gap-8 w-full"}>
+         <div className={"grid grid-cols-1 gap-3 w-full"}>
             {data?.posts.map(({_id, authorId, author, content, photo, likes, comments}: IPost, key: Key | null | undefined) => {
                return (
                   <Post

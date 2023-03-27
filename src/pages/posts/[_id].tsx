@@ -10,8 +10,13 @@ import { useRouter } from "next/router"
 import ReactMarkdown from "react-markdown"
 import Image from 'next/image'
 import LikePost from "@/components/posts/Post/Likes/LikePost"
+import { useAuth } from "@/hooks/useAuth"
+import { useLoading } from "@/hooks/useLoading"
 
 export default function Home() {
+   const {isAuth, user} = useAuth();
+   const loading = useLoading(isAuth);
+
    const { query } = useRouter();
    const QUERY_ID = `post-${query._id}`;
    const {data, isLoading, error} = useQuery({queryKey: [QUERY_ID], queryFn: () => getSinglePost(query._id)})
@@ -37,6 +42,7 @@ export default function Home() {
                />
             </div>
          }
+
          <p className={"text-xl font-semibold"}>
             {authorName}
             &nbsp;

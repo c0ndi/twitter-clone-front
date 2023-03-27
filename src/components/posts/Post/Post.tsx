@@ -19,8 +19,6 @@ import Photo from "./Photo";
 import PhotoModal from "@/components/shared/PhotoModal";
 
 export default function Post({_id, authorId, author, content, photo, likes, comments}: IPost) {
-   const queryClient = useQueryClient();
-
    const {profilePicture, name} = author;
 
    return (
