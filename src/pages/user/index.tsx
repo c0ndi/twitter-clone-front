@@ -9,25 +9,29 @@ import {useMutation, useQuery, useQueryClient} from "@tanstack/react-query";
 import {useForm} from "react-hook-form";
 import UserProfileSection from "@/components/user/UserProfileSection";
 import Posts from "@/components/posts/Posts";
+import Spinner from "@/components/shared/Spinner";
 
 export default function Page() {
    const {isAuth, user} = useAuth();
-   const loading = useLoading(isAuth);
+   const authLoading = useLoading(isAuth);
 
    const queryClient = useQueryClient();
 
    const USER_POSTS_QUERY_KEY = `${user?._id}-posts`;
    const {data, isLoading, error} = useQuery({queryKey: [USER_POSTS_QUERY_KEY], queryFn: () => getUserPosts()})
 
-   if (loading) {
+   if (isLoading || authLoading) {
       return <Loading />
    }
 
    return (
       <main className={"max-w-[720px] mx-auto px-3"}>
+         <Navbar user={user}/>
          <UserProfileSection user={user}/>
 
-         <Posts data={data} isLoading={isLoading} error={error}/>
+         <Posts
+            data={data}
+         />
       </main>
    )
 }

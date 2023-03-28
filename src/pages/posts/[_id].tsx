@@ -12,17 +12,19 @@ import Image from 'next/image'
 import LikePost from "@/components/posts/Post/Likes/LikePost"
 import { useAuth } from "@/hooks/useAuth"
 import { useLoading } from "@/hooks/useLoading"
+import Navbar from "@/components/shared/Navbar"
+import Spinner from "@/components/shared/Spinner"
 
 export default function Home() {
    const {isAuth, user} = useAuth();
-   const loading = useLoading(isAuth);
+   const authLoading = useLoading(isAuth);
 
    const { query } = useRouter();
    const QUERY_ID = `post-${query._id}`;
    const {data, isLoading, error} = useQuery({queryKey: [QUERY_ID], queryFn: () => getSinglePost(query._id)})
 
-   if (isLoading) {
-      return <Loading />
+   if (isLoading || authLoading) {
+      return <Spinner />
    }
 
    if (error) {
@@ -32,6 +34,7 @@ export default function Home() {
    const {_id, authorName, authorId, content, photo, likes, comments} = data.post;
    return (
       <main className={"max-w-[720px] mx-auto"}>
+         <Navbar user={user}/>
          {photo &&
             <div className={"mb-2 relative h-[504px]"}>
                <Image

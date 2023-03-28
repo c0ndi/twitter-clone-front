@@ -9,18 +9,9 @@ type TPosts = {
    data: {
       posts: IPost[];
    },
-   isLoading: boolean,
-   error: any,
 }
 
-export default function Posts({data, isLoading, error}: TPosts) {
-   if(isLoading) {
-      return <Spinner />
-   }
-
-   if(error) {
-      return <p>Error occured:(</p>
-   }
+export default function Posts({data}: TPosts) {
    return (
       <div className={"mt-10"}>
          <div className={"grid grid-cols-1 gap-3 w-full"}>

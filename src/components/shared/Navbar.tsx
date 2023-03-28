@@ -8,10 +8,12 @@ import { useMutation } from "@tanstack/react-query";
 import { logout } from "@/utils/auth/logout";
 import { useRouter } from "next/router";
 
-export default function Navbar() {
+type TNavbar = {
+   user: TUser
+}
+
+export default function Navbar({user}: TNavbar) {
    const router = useRouter();
-   const {isAuth, user} = useAuth();
-   const isLoading = useLoading(isAuth);
 
    const {name, profilePicture} = user as TUser;
 
@@ -30,10 +32,6 @@ export default function Navbar() {
 
    if(router.pathname === "/login" || router.pathname === "/register") {
       return <></>;
-   }
-
-   if(isLoading) {
-      return <Loading />
    }
 
    return (
