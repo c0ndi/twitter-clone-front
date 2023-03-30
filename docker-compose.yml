@@ -1,7 +1,7 @@
 version: '3.8'
 services:
   web:
-    image: c0ndi/twitter-clone-frontend:latest
+    image: c0ndi/twitter-clone-front:latest
     container_name: frontend
     build:
       context: ./
