@@ -1,16 +1,15 @@
-version: '3'
+version: '3.8'
 services:
-  next-app:
+  web:
+    image: c0ndi/twitter-clone-frontend:latest
     container_name: frontend
-    image: c0ndi/twitter-clone-front:latest
     build:
-      context: ./next-app
-      dockerfile: Dockerfile
+      context: ./
+      target: runner
+    volumes:
+      - .:/pages
+    command: npm run dev
+    ports:
+      - "3000:3000"
     environment:
       - NEXT_PUBLIC_API_URL=
-    volumes:
-      - ./next-app/src:/src
-      - ./next-app/public:/public
-    restart: always
-    ports:
-      - 3000:3000
