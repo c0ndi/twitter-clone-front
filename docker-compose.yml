@@ -1,14 +1,13 @@
 version: '3.8'
 services:
-  web:
+  app:
     image: c0ndi/twitter-clone-frontend:latest
     container_name: frontend
-    build:
-      context: ./
-      target: runner
+    build: .
     volumes:
-      - .:/pages
-    command: npm run dev
+      - ./pages:/app/src/pages
+      - ./styles/:/app/src/styles
+      - ./public/:/app/public
     ports:
       - "3000:3000"
     environment:
